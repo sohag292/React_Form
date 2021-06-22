@@ -1,6 +1,11 @@
-import React, { Component } from 'react'
-import Control from './Control'
+import React, { Component } from "react";
+import Main from "./components/Main";
+
 export default class App extends Component {
+  state = {
+    users: [],
+  };
+
   // state={
   //   name: '',
   //   country: '',
@@ -31,11 +36,17 @@ export default class App extends Component {
   //     this.setState({skills})
   //   }
   // };
+  creatUser = (user) => {
+    user.id = new Date().getTime().toString();
+    this.setState({
+      users: [...this.state.users, user],
+    });
+  };
 
   render() {
     // const {name, country, bio, brithDay, agree, skills}=this.state
     return (
-      <div style={{width:"400px", margin:"auto"}}>
+      <div style={{ width: "400px", margin: "auto" }}>
         {/* <input className="form-control my-2" value={name}  type="text" name="name" onChange={this.handleChange} placeholder="sn sohag"/>
         <select className="form-control my-2" value={country} onChange={this.handleChange} name="country">
           <option value="Bangladesh"> Bangladesh </option>
@@ -69,11 +80,19 @@ export default class App extends Component {
         </div>
 
         <button className="btn btn-primary"  onClick={()=>console.log(this.state)}>Click me</button> */}
-        <Control></Control>
+        <Main creatUser={this.creatUser}></Main>
 
+        <div>
+          <h3 className="my-5">All Registered Users :</h3>
+          <ul className="list-group my-5">
+            {this.state.users.map((user) => (
+              <li key={user.id} className="list-group-item">
+                {user.name} ... {user.email} ... {user.password}
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
-    
-    )
-
+    );
   }
 }
